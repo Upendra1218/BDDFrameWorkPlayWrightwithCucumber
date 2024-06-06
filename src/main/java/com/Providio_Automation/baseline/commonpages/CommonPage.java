@@ -1,18 +1,18 @@
-package com.automation.baseline.commonpages;
+package com.Providio_Automation.baseline.commonpages;
 
 import org.junit.Assert;
 
-import com.automation.baseline.constant.Constant;
-import com.automation.baseline.exception.CustomException;
-import com.automation.baseline.managers.FileReaderManager;
-import com.automation.baseline.utils.APIUtils;
-import com.automation.baseline.utils.CommonUtils;
-import com.automation.baseline.utils.PlaywrightUtils;
+import com.Providio_Automation.baseline.constant.Constant;
+import com.Providio_Automation.baseline.exception.CustomException;
+import com.Providio_Automation.baseline.managers.FileReaderManager;
+import com.Providio_Automation.baseline.utils.APIUtils;
+import com.Providio_Automation.baseline.utils.CommonUtils;
+import com.Providio_Automation.baseline.utils.PlaywrightUtils;
 import com.microsoft.playwright.FrameLocator;
 import com.microsoft.playwright.Page.NavigateOptions;
 
 /**
- * @Author: RafterOne QA
+ * @Author: ETG QA
  */
 public class CommonPage {
 

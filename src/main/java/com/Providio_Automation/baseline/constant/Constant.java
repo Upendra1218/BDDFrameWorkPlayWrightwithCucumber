@@ -1,4 +1,4 @@
-package com.automation.baseline.constant;
+package com.Providio_Automation.baseline.constant;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import com.microsoft.playwright.Playwright;
 import io.cucumber.java.Scenario;
 
 /**
- * @Author: RafterOne QA
+ * @Author: ETG QA
  */
 public class Constant {
 	
