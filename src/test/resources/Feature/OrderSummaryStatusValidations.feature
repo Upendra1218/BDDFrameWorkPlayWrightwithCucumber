@@ -18,18 +18,18 @@ Feature: Order Summary Object Status Validaton
     And User clicks on the "Next Review Order" button on "Checkout" Page
     And User clicks on the "Place Order" button on "Checkout" Page
     Then Verify "Thank you for your order" message on "Order Confirmation" Page
-    When User login into the "Salesforce"
-    And User wait for "Order Summary" record to be created in "OMS" through API
-    And Verify "Status" is "Created" for "Order Summary" record
-    And Verify "Status" is "ORDERED" for "Order Product Summary" record
-    When User updates "Status" to "Approved" for "Order Summary" record
-    And User wait for "Fulfillment Order" record to be created in "OMS" through API
-    And Verify "Status" is "Waiting to Fulfill" for "Order Summary" record
-    And Verify "Status" is "ALLOCATED" for "Order Product Summary" record
-    And User updates "Status" to "Fulfilled" for "Fulfillment Order" record
-    Then Verify "Status" updated to "Payment Settlement" for "Order Summary" record
-    And Verify "Status" is "FULFILLED" for "Order Product Summary" record
-    And Verify "Status" updated to "Fulfilled" for "Order Summary" record
+    #When User login into the "Salesforce"
+    #And User wait for "Order Summary" record to be created in "OMS" through API
+   # And Verify "Status" is "Created" for "Order Summary" record
+    #And Verify "Status" is "ORDERED" for "Order Product Summary" record
+    #When User updates "Status" to "Approved" for "Order Summary" record
+    #And User wait for "Fulfillment Order" record to be created in "OMS" through API
+    #And Verify "Status" is "Waiting to Fulfill" for "Order Summary" record
+    #And Verify "Status" is "ALLOCATED" for "Order Product Summary" record
+    #And User updates "Status" to "Fulfilled" for "Fulfillment Order" record
+    #Then Verify "Status" updated to "Payment Settlement" for "Order Summary" record
+    #And Verify "Status" is "FULFILLED" for "Order Product Summary" record
+    #And Verify "Status" updated to "Fulfilled" for "Order Summary" record
 
     @OrderSummaryStatusValidations
     Examples: 

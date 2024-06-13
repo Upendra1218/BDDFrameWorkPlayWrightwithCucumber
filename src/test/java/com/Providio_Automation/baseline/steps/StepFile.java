@@ -12,6 +12,7 @@ import com.Providio_Automation.baseline.managers.FileReaderManager;
 import com.Providio_Automation.baseline.pageobjects.APIPage;
 import com.Providio_Automation.baseline.pageobjects.CheckoutPage;
 import com.Providio_Automation.baseline.pageobjects.PDP;
+import com.Providio_Automation.baseline.pageobjects.PageValidation;
 import com.Providio_Automation.baseline.pageobjects.PaymentPage;
 import com.Providio_Automation.baseline.pageobjects.RegisterPage;
 import com.Providio_Automation.baseline.utils.CommonUtils;
@@ -32,6 +33,24 @@ public class StepFile {
 	PaymentPage payment = new PaymentPage();
 	PDP pdp = new PDP();
 	APIPage api = new APIPage();
+	
+	@When("User validates the current page with the {string} page and is redirected to the desired page")
+	public void user_redirects_to_desired_page(String pageName) {
+		switch (pageName) {
+		case "Home Page":
+			//PlaywrightUtils.waitForAnElement(PlaywrightUtils.getElement(pageName, Constant.PAGE));
+			PageValidation.home_validation(pageName);
+			break;
+		default:
+			break;
+		}
+	}
+	
+	
+	
+	
+	
+	
 	
 	@Given("User login into the {string}")
 	public void user_login_into_the(String application) {
@@ -57,6 +76,44 @@ public class StepFile {
 		default:
 			throw new CustomException("Please define case for '" + application + "' in respective StepDef");
 		}
+	}
+	
+	@Given("User navigates to a random sub-category under a random category on the {string} page")
+	public void user_select_random_sub_menu_from_menu(String page) {
+		CommonUtils.select_random_mega_menu(Constant.PAGE);
+	}
+	
+	@Given("User scroll into {string} section and click on {string} on the {string} page")
+	public void user_select_random(String locator, String links,String page) {
+		PlaywrightUtils.scrollToElement(PlaywrightUtils.getElement(locator, Constant.PAGE));
+		PlaywrightUtils.waitForMoreSec(2);
+		switch (links) {
+		case "Random":
+			PlaywrightUtils.click(CommonUtils.select_random_footer_links(Constant.PAGE));
+			ExtentCucumberAdapter.addTestStepLog("Navigated to Random Category successfully");
+			break;
+		default:
+			PlaywrightUtils.click(CommonUtils.getFooterLinkLocators(links,Constant.PAGE));
+			ExtentCucumberAdapter.addTestStepLog("Navigated to '"+links+" Category successfully");
+			break;
+		}
+		 PlaywrightUtils.waitForMoreSec(1);
+		 PlaywrightUtils.addScreenshotToReport();
+	}
+	
+	
+	@Given("User navigates to {string} category tile on {string} page")
+	public void user_navigates_to_category_tile(String Value, String page) {
+		switch (Value) {
+		case "Random":
+			PlaywrightUtils.waitForMoreSec(2);
+			PlaywrightUtils.click(CommonUtils.select_random_category_tile(Constant.PAGE));
+			break;
+		default:
+			 PlaywrightUtils.click(CommonUtils.getCategoriesLocators(Value, Constant.PAGE));
+			break;
+		}
+		
 	}
 
 	@Given("User select the {string} on {string} Page")
@@ -140,6 +197,7 @@ public class StepFile {
 			//PlaywrightUtils.click(PlaywrightUtils.waitForAnElement(PlaywrightUtils.getElement(button, Constant.PAGE)));
 			break;
 		}
+		
 		ExtentCucumberAdapter.addTestStepLog("'" + button +"' Button clicked successfully");
 	}
 
@@ -148,6 +206,7 @@ public class StepFile {
 	    PlaywrightUtils.waitForAnElement(PlaywrightUtils.getElement(element, Constant.PAGE));
 	    Assert.assertTrue(PlaywrightUtils.getElement(element, Constant.PAGE).isVisible());
 	    ExtentCucumberAdapter.addTestStepLog("'" + element + "' verified successfully");
+	    PlaywrightUtils.waitForMoreSec(1);
 	    PlaywrightUtils.addScreenshotToReport();
 	}
 
@@ -172,6 +231,13 @@ public class StepFile {
 	    PlaywrightUtils.click(CommonUtils.findCategoryByExactText(subCategory, Constant.PAGE));
 	    ExtentCucumberAdapter.addTestStepLog("Navigated to '"+subCategory+"' Sub-Category under '"+category+"' Category successfully");
 	}
+	
+	@When("User navigates to {string} Category landing page from {string} Page")
+	public void user_navigates_to_category_landing_page( String category, String page) {
+	    PlaywrightUtils.click(CommonUtils.findCategoryByExactText(category, Constant.PAGE));
+	    ExtentCucumberAdapter.addTestStepLog("Navigated to '"+category+"' Category landing page successfully");
+	}
+	
 	
 	@When("User clicks on the {string} links on the {string} Page")
 	public void user_clicks_on_salesforce_app_on_page(String app, String page) {
@@ -205,6 +271,11 @@ public class StepFile {
 			PlaywrightUtils.waitForAnElement(PlaywrightUtils.getElement(field, Constant.PAGE));
 			PlaywrightUtils.setValue(value, PlaywrightUtils.getElement(field, Constant.PAGE));
 			break;
+		case "Search Bar":
+			PlaywrightUtils.waitForAnElement(PlaywrightUtils.getElement(field, Constant.PAGE));
+			PlaywrightUtils.enters_value_and_presses_enter(value, PlaywrightUtils.getElement(field, Constant.PAGE));
+			break;
+			
 		default:
 			PlaywrightUtils.waitForAnElement(PlaywrightUtils.getElement(field, Constant.PAGE));
 			PlaywrightUtils.setValueUsingKeyboard(value, PlaywrightUtils.getElement(field, Constant.PAGE));
@@ -372,5 +443,7 @@ public class StepFile {
 		}
 		 
 	 }
+	 
+	 
 	
 }

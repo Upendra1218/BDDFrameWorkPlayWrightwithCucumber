@@ -18,6 +18,7 @@ import org.junit.Assert;
 
 import com.Providio_Automation.baseline.constant.Constant;
 import com.Providio_Automation.baseline.exception.CustomException;
+import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;
 import com.microsoft.playwright.FrameLocator;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -26,6 +27,63 @@ import com.microsoft.playwright.Page;
  * @Author: ETG QA
  */
 public class CommonUtils {
+	
+	/**
+	 * Method to navigates to a random sub-category under a random category
+	 * @param page
+	 */
+	public static void select_random_mega_menu(Page page){	
+		Locator  mega_menu = page.locator("//ul[contains(@class, 'nav navbar-nav')]//li[contains(@class, 'nav-item') and @role='presentation']");
+		int random_menu_number = generateRandomNumberfromGivenNumber(mega_menu.count());
+		Locator  Category_name_for_report = page.locator("(//ul[contains(@class, 'nav navbar-nav')]//li[contains(@class, 'nav-item') and @role='presentation']//a)[" + random_menu_number + "]");
+		int index_of_menu = random_menu_number - 1;
+		Locator select_mega_menu = mega_menu.nth(index_of_menu);
+		if(random_menu_number == 5 || random_menu_number ==6) {
+			PlaywrightUtils.click(select_mega_menu);
+			ExtentCucumberAdapter.addTestStepLog("Navigated to "+PlaywrightUtils.getText(Category_name_for_report)+"' Category successfully");
+		}else {
+			Locator sub_Category = page.locator("(//ul[contains(@class, 'nav navbar-nav')]//li[contains(@class, 'nav-item dropdown')])[" + random_menu_number + "]//a[@class='dropdown-link']");
+			int random_sub_menu_number = generateRandomNumberfromGivenNumber(sub_Category.count());
+			int index_of_sub_menu = random_sub_menu_number - 1;
+			Locator select_sub_menu = sub_Category.nth(index_of_sub_menu);
+			PlaywrightUtils.hover(select_mega_menu);
+			PlaywrightUtils.waitForMoreSec(1);
+			PlaywrightUtils.click(select_sub_menu);
+			ExtentCucumberAdapter.addTestStepLog("Navigated to '"+select_sub_menu.innerText()+"' Sub-Category under '"+PlaywrightUtils.getText(Category_name_for_report)+"' Category successfully");
+		}
+		PlaywrightUtils.addScreenshotToReport();
+	}
+	
+	/**
+	 * Method to select random category tile
+	 * @param page
+	 * @return
+	 */
+	public static Locator select_random_category_tile(Page page) {
+		Locator  category_tiles = page.locator("//h5[@class='category-name']");
+		int random_category_tile = generateRandomNumberfromGivenNumber(category_tiles.count());
+		int index_of_menu = random_category_tile - 1;
+		Locator select_category_tiles = category_tiles.nth(index_of_menu);
+		PlaywrightUtils.waitForMoreSec(1);
+		return select_category_tiles;
+	}
+	
+	/**
+	 * Method to return footer link
+	 * @param page
+	 * @return
+	 */
+	public static Locator select_random_footer_links(Page page) {
+		Locator  footer_links = page.locator("//footer//div[@class='footer-info']//ul//li//a");
+		int random_footer_link = generateRandomNumberfromGivenNumber(footer_links.count());
+		if(random_footer_link > 12)
+			random_footer_link = random_footer_link - 8;
+		System.out.println(random_footer_link);
+		int index_of_footer_link = random_footer_link-1;
+		System.out.println(index_of_footer_link);
+		Locator generated_footer_link = footer_links.nth(index_of_footer_link);
+		return generated_footer_link;
+	}
 	
 	/**
      * Method to get Products List from Products.json file
@@ -301,6 +359,7 @@ public class CommonUtils {
 	public static Locator getEditButtonUsingFieldName(String value, Page page) {
 		return page.locator(String.format("//span[text()='%s']/../..//button[contains(@title,'Edit')]", value));
 	}
+
 	
 	/**
 	 * Method for Returning Locator for Opening Edit Dropdown for Field
@@ -395,6 +454,20 @@ public class CommonUtils {
 	public static Locator getFieldValueLocator(String value, Page page) {
 		return page.locator(String.format("(//span[text()='%s'])[1]/following::lightning-formatted-text[1]", value));
 	}
+	
+	/**
+	 * Method for Returning Categories links by given text which is on the home page
+	 * @param value - Dynamic Text value
+	 * @param page - Page on which you are looking for Element
+	 * @return - Element Locator
+	 */
+	public static Locator getCategoriesLocators(String value, Page page) {
+		return page.locator(String.format("//h5[contains(text(),'%s')]", value));
+	}
+	
+	public static Locator getFooterLinkLocators(String value, Page page) {
+		return page.locator(String.format("//footer//ul//li//a[text()='%s']", value));
+	} 
 	
 	/**
 	 * Method for Returning Type of Opportunity by given text 
@@ -605,6 +678,20 @@ public class CommonUtils {
 			number += temp;
 		}
 		return number;
+	}
+	/**
+	 * Method for generate a random number
+	 * @param no_of_elements
+	 * @return
+	 */
+	public static int generateRandomNumberfromGivenNumber(int no_of_elements) {
+	 Random random = new Random();   
+	 int generated_random_number = random.nextInt(no_of_elements);
+	 System.out.println("Random number"+generated_random_number); 
+	 if(generated_random_number == 0)
+         return generated_random_number+1;
+	 else
+	     return generated_random_number;
 	}
 	
 	/**

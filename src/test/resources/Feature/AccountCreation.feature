@@ -13,7 +13,7 @@ Feature: CreateAccountonStoreFront
     @CreateAccountonStoreFront
     Examples: 
       | FirstName   | LastName | Phone        | Email                   | ConformEmail            | Password       | ConformPassword |
-      | "Upendra" | "y"      | "5555555555" | "upendra08061212123212230012@gmail.com" | "upendra08061212123212230012@gmail.com" | "Upendra@1234" | "Upendra@1234"  |
+      | "Upendra" | "y"      | "5555555555" | "upendra@gmail.com" | "upendra@gmail.com" | "Upendra@1234" | "Upendra@1234"  |
 			
       
       

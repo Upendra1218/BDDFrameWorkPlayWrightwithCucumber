@@ -26,10 +26,15 @@ public class Hooks {
 
 	@Before
 	public void beforeScenario(Scenario scenario) throws IOException, ParseException {
+		
 		Constant.currentScenario = scenario;
 		LocatorsFileReader.readLocatorProperties();
 		ExcelUtils.openStream();
-
+		
+		/**
+		 * @Author: ETG QA implemented code
+		 * @purose: Need to invoke the browser once
+		 */
 		if (!isBrowserInitialized) {
 			// Initialize the browser and pass the URL here
 			new PlaywrightManager();
@@ -67,9 +72,12 @@ public class Hooks {
 			e.printStackTrace();
 		}
 
+		/**
+		 * @Author: ETG QA implemented code
+		 * @purose: Need to tear down the browser once
+		 */
 		completedScenarios++;
 		System.out.println("Completed No of scenatios: "+completedScenarios);
-
 		if (completedScenarios == totalScenarios) {
 			System.out.println("coming here");
 			// Close the browser after all scenarios have completed

@@ -9,7 +9,7 @@ import io.cucumber.junit.CucumberOptions;
 @CucumberOptions(
 		features={"src/test/resources/Feature"},
 		glue = { "com/Providio_Automation/baseline/steps"  ,"com/Providio_Automation/baseline/hooks" },
-		tags= "@Smoke",
+		tags= "@Verify_random_footer_links_navigation",
 	
 		plugin={"pretty",
 				"json:target/cucumber-reports/Cucumber.json",

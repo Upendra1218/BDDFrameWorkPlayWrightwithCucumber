@@ -529,6 +529,22 @@ public class PlaywrightUtils {
 			throw new CustomException(e.getMessage());
 		}
 	}
+	
+	/**
+	 * @author - Etg - QA
+	 * Method to set Value on Element (Input Fields) using Keyboard and Press enter 
+	 * @param value   - Value
+	 * @param locator - Element Locator
+	 */
+	public static void enters_value_and_presses_enter(String value, Locator locator) {
+		try {
+			locator.fill(value);
+			PlaywrightUtils.waitForMoreSec(1);
+			locator.press("Enter");
+		} catch (Exception e) {
+			throw new CustomException(e.getMessage());
+		}
+	}
 
 	/**
 	 * Method to Clear then Set Value on Element(Input Fields) using Keyboard
@@ -753,6 +769,20 @@ public class PlaywrightUtils {
 		newPage.navigate(URL);
 		return newPage;
 	}
+	
+	
+	/**
+	 * Method to count no of elements present on the page
+	 * @params - locator 
+	 * 
+	 */
+	public static boolean no_of_elements_present_on_page(Locator locator) {
+		PlaywrightUtils.waitForMoreSec(2);
+		if(locator.count()>0) 
+	     return true;
+	     else return false;
+	}
+	
 
 	/**
 	 * Method to close all other tabs except given tab URL
